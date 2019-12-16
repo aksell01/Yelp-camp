@@ -1,0 +1,96 @@
+function Vehicle(make, model, year) {
+    this.make = make;
+    this.year = year;
+    this.model = model;
+    this.isRunning = false;
+}
+
+Vehicle.prototype.turnOn = function (){
+    this.isRunning = true;
+}
+
+Vehicle.prototype.turnOff(){
+    this.isRunning = false;
+}
+
+Vehicle.prototype.honk = function() {
+    if(this.isRunning){
+        return "beep";
+    }
+}
+
+
+var p1 = new Promise (function(resolve, reject){
+    var num = Math.random();
+    if (num < 0.5) {
+        resolve (num);
+    } else {
+        reject (num);
+    }
+});
+
+p1.then(function(result){
+    console.log("Resolve", result);
+}).catch(function(error){
+    console.log("Error", error);
+});
+
+var p1 = new Promise(function (resolve, reject) {
+    setTimeout(function(){
+        var restTimeOut = Math.floor(Math.random() * 10)
+    }, 1000)
+});
+
+p1.then(function(result){
+    console.log("New one", result)
+});
+
+var Counter = 0;
+setTimeout(function(){
+    Counter++;
+    console.log("Count", Counter);
+    setTimeout(function(){
+        Counter++;
+        console.log("Count", Counter);
+        setTimeout(function(){
+            Counter++;
+            console.log("Count", Counter);
+        }, 1000);
+    }, 2000);
+}, 3000);
+
+var p1 = new Promise(function(resolve, reject){
+    resolve(5);
+});
+
+p1.then(function(data){
+    return data * 2;
+}).then(function(data){
+    return data + 20;
+}).then(function(data){
+    console.log(data);
+});
+
+var counter = 0;
+function inCounter (){
+    counter++;
+    console.log("Counter", counter);
+}
+
+function runLater(callback, timeInMls) {
+    var p = new Promise (function(resolve, reject){
+        setTimeout(function() {
+        var pi = callback();
+        resolve (pi);
+    }, timeInMls);
+    });
+    return p
+}
+
+runLater(inCounter, 1000).then(function(){
+    return runLater(incounter, 2000);
+}).then (function() {
+    return runLater(incounter, 3000);
+}).then (function () {
+
+})
